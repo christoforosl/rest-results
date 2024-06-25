@@ -8,17 +8,30 @@
 	<version>0.1-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
-	<name>rest-results</name>
+	<name>io.github.christoforosl:rest-results</name>
+
+	<description>This jar contains a common return format for all your REST API results.</description>
+	<url>http://www.example.com/example-application</url>
 
 	<distributionManagement>
-
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
 		<repository>
-			<id>central</id>
-			<name>svn.netugroup.lan-releases</name>
-			<url>https://artifactory.netu.com.cy/artifactory/libs-release-local</url>
+			<id>ossrh</id>
+			<url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
-
 	</distributionManagement>
+
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
 	<scm>
 		<url>scm:git:https://github.com/christoforosl/rest-results.git</url>
 		<developerConnection>scm:git:https://github.com/christoforosl/rest-results.git</developerConnection>
@@ -26,8 +39,27 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<developers>
+		<developer>
+			<name>Chris Lambrou</name>
+			<email>christoforos08@gmail.com</email>
+			<organization></organization>
+			<organizationUrl></organizationUrl>
+		</developer>
+	</developers>
+
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.sonatype.central</groupId>
+				<artifactId>central-publishing-maven-plugin</artifactId>
+				<version>0.5.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<publishingServerId>central</publishingServerId>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -46,7 +78,7 @@
 
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				 <version>3.7.0</version>
+				<version>3.7.0</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -67,6 +99,34 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>3.2.4</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+						<configuration>
+							<keyname>Christoforos Lambrou</keyname>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
@@ -77,6 +137,8 @@
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.6</version>
 			</plugin>
+
+
 
 		</plugins>
 	</reporting>
