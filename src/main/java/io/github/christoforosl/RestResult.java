@@ -14,10 +14,10 @@ import lombok.Data;
  * This class encapsulates the status, result data, and error information of a REST API call.
  * It provides static factory methods for creating success and error results.
  *
- *
  * <p>In production environments, error messages are masked for security reasons.</p>
  *
  * @author christoforosl
+ * io.github.christoforosl.RestResult
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder(access = AccessLevel.PRIVATE, setterPrefix = "set")
