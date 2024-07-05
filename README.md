@@ -1,8 +1,8 @@
 # RestResult
 
 ## Overview
-
-`RestResult` is a Java class designed to encapsulate the result of a REST API operation. It includes the status, result data, and error information. The class provides static factory methods for creating instances representing successful or error results.
+This library includes only one file: `RestResult` 
+This is a Java class designed to encapsulate the result of a REST API operation. It includes the status, result data, and error information. The class provides static factory methods for creating instances representing successful or error results.
 
 ## Features
 
@@ -12,27 +12,37 @@
 - Uses Lombok for boilerplate code reduction.
 
 ## Usage
-
-### Creating a Success Result
-
-To create a success result, use the `success` static method and pass the result data:
-
-```java
-RestResult successResult = RestResult.success(results);
+To include, use this in your maven dependencies:  
+```xml
+<!-- https://mvnrepository.com/artifact/io.github.christoforosl/rest-results -->
+<dependency>
+    <groupId>io.github.christoforosl</groupId>
+    <artifactId>rest-results</artifactId>
+    <version>0.2</version>
+</dependency>
 ```
 
-### Creating an Error Result
+### Typical usage
 
-To create an error result with a custom error message:
+To create a success result, use the `success` static method and pass the result data, where data can be anything.
+You can create an error result with a custom error message, and finally you can create an error result with an exception within a try-catch block:
 
-```java
-RestResult errorResult = RestResult.error("Error message");
-```
-
-To create an error result with an exception:
 
 ```java
-RestResult errorResult = RestResult.error(new Exception("Exception message"));
+public RestResult doSomething() {
+    try {
+        ...
+        if (someCondition) {
+            return RestResult.error("Some Custom Error message"); 
+        }
+        Object results = someCall();
+
+        return RestResult.success(results);
+
+    } catch (Exception e) {
+        return RestResult.error(e);
+    }
+}
 ```
 
 ## Environment Configuration
@@ -53,62 +63,3 @@ The class checks if the current environment is production by inspecting system p
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Java File Details
-
-- **Package**: `io.github.christoforosl`
-- **Imports**:
-  - `com.fasterxml.jackson.annotation.JsonInclude`
-  - `java.util.logging.Level`
-  - `java.util.logging.Logger`
-  - `lombok.AccessLevel`
-  - `lombok.Builder`
-  - `lombok.Data`
-
-- **Class**: `RestResult`
-  - **Annotations**:
-    - `@JsonInclude(JsonInclude.Include.NON_NULL)`
-    - `@Builder(access = AccessLevel.PRIVATE, setterPrefix = "set")`
-    - `@Data`
-
-### Methods
-
-- **Static Methods**:
-  - `success(Object results)`: Creates a successful REST API result.
-  - `error(String errorMessage)`: Creates an error REST API result with a custom message.
-  - `error(Throwable thr)`: Creates an error REST API result with an exception.
-
-### Fields
-
-- `private static final boolean IS_PROD`
-- `private String error`
-- `private Object results`
-- `private EnumRestResultStatus status`
-- `private final long timestamp`
-- `private static final Logger LOGGER`
-
-## Building and Running
-
-### Prerequisites
-
-- Java Development Kit (JDK)
-- Lombok library
-- Jackson library
-
-### Compilation
-
-Use your preferred Java build tool (e.g., Maven, Gradle) to compile the project, ensuring Lombok and Jackson are included as dependencies.
-
-### Example
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        RestResult successResult = RestResult.success("Success data");
-        RestResult errorResult = RestResult.error("Error occurred");
-        System.out.println(successResult);
-        System.out.println(errorResult);
-    }
-}
-```
-
-This example demonstrates how to create and print success and error results using the `RestResult` class.
