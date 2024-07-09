@@ -5,7 +5,7 @@
 
 	<groupId>io.github.christoforosl</groupId>
 	<artifactId>rest-results</artifactId>
-	<version>0.2</version>
+	<version>0.3</version>
 
 	<packaging>jar</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
@@ -15,6 +15,7 @@
 Release History:
 0.1: rest-results initial revision
 0.2: added junut tests and json dependency
+0.3: renamed RestResult to APIResults for baclwards compatibility
 
 	</description>
 	<url>https://github.com/christoforosl/rest-results.git</url>

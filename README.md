@@ -1,7 +1,7 @@
-# RestResult
+# APIResults
 
 ## Overview
-This library includes only one file: `RestResult` 
+This library includes only one file: `APIResults` 
 This is a Java class designed to encapsulate the result of a REST API operation. It includes the status, result data, and error information. The class provides static factory methods for creating instances representing successful or error results.
 
 ## Features
@@ -29,18 +29,18 @@ You can create an error result with a custom error message, and finally you can 
 
 
 ```java
-public RestResult doSomething() {
+public APIResults doSomething() {
     try {
         ...
         if (someCondition) {
-            return RestResult.error("Some Custom Error message"); 
+            return APIResults.error("Some Custom Error message"); 
         }
         Object results = someCall();
 
-        return RestResult.success(results);
+        return APIResults.success(results);
 
     } catch (Exception e) {
-        return RestResult.error(e);
+        return APIResults.error(e);
     }
 }
 ```

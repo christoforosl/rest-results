@@ -17,12 +17,12 @@ import lombok.Data;
  * <p>In production environments, error messages are masked for security reasons.</p>
  *
  * @author christoforosl
- * io.github.christoforosl.RestResult
+ * io.github.christoforosl.APIResults
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder(access = AccessLevel.PRIVATE, setterPrefix = "set")
 @Data
-public class RestResult {
+public class APIResults {
 
     private static final boolean IS_PROD = isProduction();
 
@@ -46,18 +46,18 @@ public class RestResult {
 
     private String error;
     private Object results;
-    private EnumRestResultStatus status;
+    private EnumAPIResultsStatus status;
     private final long timestamp = System.currentTimeMillis();
 
-    private static final Logger LOGGER = Logger.getLogger(RestResult.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(APIResults.class.getName());
 
     /**
      * Creates a successful REST API result.
      * @param results the result data
      * @return a successful REST API result
      */
-    public static RestResult success(final Object results) {
-        return RestResult.builder().setResults(results).setStatus(EnumRestResultStatus.SUCCESS).setError(null).build();
+    public static APIResults success(final Object results) {
+        return APIResults.builder().setResults(results).setStatus(EnumAPIResultsStatus.SUCCESS).setError(null).build();
 
     }
 
@@ -66,8 +66,8 @@ public class RestResult {
      * @param errorMessage the error message
      * @return an error REST API result
      */
-    public static RestResult error(final String errorMessage) {
-        return RestResult.builder().setResults(null).setStatus(EnumRestResultStatus.ERROR).setError(errorMessage)
+    public static APIResults error(final String errorMessage) {
+        return APIResults.builder().setResults(null).setStatus(EnumAPIResultsStatus.ERROR).setError(errorMessage)
                 .build();
     }
     /**
@@ -75,14 +75,14 @@ public class RestResult {
      * @param thr the exception that caused the error
      * @return an error REST API result
      */
-    public static RestResult error(final Throwable thr) {
+    public static APIResults error(final Throwable thr) {
         long errornumber = System.currentTimeMillis();
 
         // dont reveal the error message in production
         final String errorMessage = "Exception Number [" + errornumber + "]" + (IS_PROD ? "" : thr.getMessage());
         LOGGER.log(Level.SEVERE, errorMessage, thr);
 
-        return RestResult.builder().setResults(null).setStatus(EnumRestResultStatus.ERROR)
+        return APIResults.builder().setResults(null).setStatus(EnumAPIResultsStatus.ERROR)
                 .setError(errorMessage).build();
 
     }

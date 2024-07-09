@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RestResultJsonSerializationTest {
+class APIResultsJsonSerializationTest {
 
 	private ObjectMapper objectMapper;
 
@@ -18,7 +18,7 @@ class RestResultJsonSerializationTest {
 	@Test
 	void testSuccessResultSerialization() throws Exception {
 		String resultData = "Test Data";
-		RestResult result = RestResult.success(resultData);
+		APIResults result = APIResults.success(resultData);
 
 		String json = objectMapper.writeValueAsString(result);
 
@@ -30,7 +30,7 @@ class RestResultJsonSerializationTest {
 	@Test
 	void testErrorResultSerialization() throws Exception {
 		String errorMessage = "Test Error";
-		RestResult result = RestResult.error(errorMessage);
+		APIResults result = APIResults.error(errorMessage);
 
 		String json = objectMapper.writeValueAsString(result);
 
@@ -44,7 +44,7 @@ class RestResultJsonSerializationTest {
 		try {
 			new Exception("Test Exception");
 		} catch (Exception testException) {
-			RestResult result = RestResult.error(testException);
+			APIResults result = APIResults.error(testException);
 			String json = objectMapper.writeValueAsString(result);
 
 			assertTrue(json.contains("\"status\":\"ERROR\""));
@@ -58,7 +58,7 @@ class RestResultJsonSerializationTest {
 	@Test
 	void testCustomResultSerialization() throws Exception {
 		CustomObject customObject = new CustomObject("Test Name", 42);
-		RestResult result = RestResult.success(customObject);
+		APIResults result = APIResults.success(customObject);
 
 		String json = objectMapper.writeValueAsString(result);
 
