@@ -1,8 +1,11 @@
 # APIResults
 
 ## Overview
-This library includes only one file: `APIResults` 
+This library includes only one file: `APIResults`
 This is a Java class designed to encapsulate the result of a REST API operation. It includes the status, result data, and error information. The class provides static factory methods for creating instances representing successful or error results.
+
+NOTE: Run Kleopatra for gpg enctryption of the jar file before uploading to maven repository.
+https://www.gpg4win.org/download.html
 
 ## Features
 
@@ -12,13 +15,13 @@ This is a Java class designed to encapsulate the result of a REST API operation.
 - Uses Lombok for boilerplate code reduction.
 
 ## Usage
-To include, use this in your maven dependencies:  
+To include, use this in your maven dependencies:
 ```xml
 <!-- https://mvnrepository.com/artifact/io.github.christoforosl/rest-results -->
 <dependency>
     <groupId>io.github.christoforosl</groupId>
     <artifactId>rest-results</artifactId>
-    <version>0.2</version>
+    <version>0.6</version>
 </dependency>
 ```
 
@@ -29,13 +32,13 @@ You can create an error result with a custom error message, and finally you can 
 
 
 ```java
-public APIResults doSomething() {
+public APIResults<SomeObject> doSomething() {
     try {
         ...
         if (someCondition) {
-            return APIResults.error("Some Custom Error message"); 
+            return APIResults.error("Some Custom Error message");
         }
-        Object results = someCall();
+        SomeObject results = someCall();
 
         return APIResults.success(results);
 

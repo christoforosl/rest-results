@@ -11,12 +11,16 @@
 	<name>${project.groupId}:${project.artifactId}</name>
 
 	<description>This jar contains a common return format for all your REST API results.
+NOTE: Run Kleopatra for gpg enctryption of the jar file before uploading to maven repository.
+https://www.gpg4win.org/download.html
 
 Release History:
 0.1: rest-results initial revision
 0.2: added junut tests and json dependency
 0.3: renamed RestResult to APIResults for baclwards compatibility
-
+0.4: code cleanup
+0.5: APIResults is now Generic
+0.6: release to maven repository
 	</description>
 	<url>https://github.com/christoforosl/rest-results.git</url>
 

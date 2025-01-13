@@ -24,7 +24,14 @@ import lombok.Data;
 @Data
 public class APIResults {
 
+    private static final Logger LOGGER = Logger.getLogger(APIResults.class.getName());
+
     private static final boolean IS_PROD = isProduction();
+
+    private String error;
+    private Object results;
+    private EnumAPIResultsStatus status;
+    private final long timestamp = System.currentTimeMillis();
 
     /**
      * Determines if the current environment is production.
@@ -41,15 +48,8 @@ public class APIResults {
             springProfile = System.getProperty("rest-results.env", "");
         }
 
-        return springProfile.equalsIgnoreCase("prod") || springProfile.equalsIgnoreCase("production");
+        return "prod".equalsIgnoreCase(springProfile) || "production".equalsIgnoreCase(springProfile);
     }
-
-    private String error;
-    private Object results;
-    private EnumAPIResultsStatus status;
-    private final long timestamp = System.currentTimeMillis();
-
-    private static final Logger LOGGER = Logger.getLogger(APIResults.class.getName());
 
     /**
      * Creates a successful REST API result.
@@ -70,6 +70,7 @@ public class APIResults {
         return APIResults.builder().setResults(null).setStatus(EnumAPIResultsStatus.ERROR).setError(errorMessage)
                 .build();
     }
+
     /**
      * Creates an error REST API result.
      * @param thr the exception that caused the error
@@ -79,7 +80,7 @@ public class APIResults {
         long errornumber = System.currentTimeMillis();
 
         // dont reveal the error message in production
-        final String errorMessage = "Exception Number [" + errornumber + "]" + (IS_PROD ? "" : thr.getMessage());
+        final String errorMessage = "Exception Number [" + errornumber + "]" + (IS_PROD ? " " : thr.getMessage());
         LOGGER.log(Level.SEVERE, errorMessage, thr);
 
         return APIResults.builder().setResults(null).setStatus(EnumAPIResultsStatus.ERROR)
