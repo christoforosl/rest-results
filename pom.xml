@@ -5,7 +5,7 @@
 
 	<groupId>io.github.christoforosl</groupId>
 	<artifactId>rest-results</artifactId>
-	<version>0.6</version>
+	<version>0.7</version>
 
 	<packaging>jar</packaging>
 	<name>${project.groupId}:${project.artifactId}</name>
@@ -21,6 +21,7 @@ Release History:
 0.4: code cleanup
 0.5: APIResults is now Generic
 0.6: release to maven repository
+0.7: release again
 	</description>
 	<url>https://github.com/christoforosl/rest-results.git</url>
 
